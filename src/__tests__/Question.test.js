@@ -21,7 +21,6 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-// const onChange = jest.fn();
 test("creates an interval with setTimeout", () => {
   jest.spyOn(global, 'setTimeout');
   render(<Question question={testQuestion} onAnswered={noop} />);
@@ -55,10 +54,10 @@ test("calls onAnswered after 10 seconds", () => {
 });
 
 test("clears the timeout after unmount", () => {
-  jest.spyOn(global, 'clearTimeout');
+  jest.spyOn(global, 'clearInterval');  // Use clearInterval instead of clearTimeout
   const { unmount } = render(
     <Question question={testQuestion} onAnswered={noop} />
   );
   unmount();
-  expect(clearTimeout).toHaveBeenCalled();
+  expect(global.clearInterval).toHaveBeenCalled();  // Check clearInterval
 });
